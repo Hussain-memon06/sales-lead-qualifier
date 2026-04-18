@@ -1,0 +1,248 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Warm off-white base */
+    --background: 40 33% 98%;
+    --foreground: 222 47% 11%;
+    --ink: 222 47% 11%;
+
+    /* Layered surfaces for depth */
+    --surface: 0 0% 100%;
+    --surface-raised: 0 0% 100%;
+    --surface-sunken: 40 20% 97%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --muted: 215 25% 96%;
+    --muted-foreground: 215 15% 44%;
+
+    --border: 215 25% 90%;
+    --border-strong: 215 25% 82%;
+    --input: 215 25% 88%;
+    --ring: 162 63% 38%;
+
+    /* Emerald / teal primary — RevOps/trust, not AI purple */
+    --primary: 162 63% 32%;
+    --primary-foreground: 151 81% 96%;
+
+    --secondary: 215 25% 96%;
+    --secondary-foreground: 222 47% 11%;
+
+    --accent: 215 25% 96%;
+    --accent-foreground: 222 47% 11%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Lead qualification status */
+    --hot: 356 75% 53%;
+    --warm: 32 95% 44%;
+    --cold: 215 20% 55%;
+
+    --radius: 0.875rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "cv11", "ss01", "ss03", "cv02";
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    /* Ambient atmosphere: warm gradient wash + cool highlight spots.
+       Fixed attachment keeps the feel continuous while scrolling. */
+    background-image:
+      radial-gradient(
+        ellipse 80% 60% at 85% -10%,
+        hsl(162 63% 50% / 0.10) 0%,
+        transparent 55%
+      ),
+      radial-gradient(
+        ellipse 70% 50% at 0% 100%,
+        hsl(217 91% 60% / 0.06) 0%,
+        transparent 60%
+      ),
+      radial-gradient(
+        ellipse 60% 40% at 50% 50%,
+        hsl(32 95% 50% / 0.03) 0%,
+        transparent 70%
+      ),
+      linear-gradient(180deg, hsl(40 33% 98%) 0%, hsl(40 33% 97%) 100%);
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3 {
+    @apply font-display tracking-tight;
+  }
+
+  ::selection {
+    background: hsl(162 63% 38% / 0.18);
+    color: hsl(222 47% 11%);
+  }
+}
+
+@layer components {
+  /* Elevated glass surface — used for hero and premium cards */
+  .surface-glass {
+    background: linear-gradient(
+      180deg,
+      hsl(0 0% 100% / 0.9) 0%,
+      hsl(0 0% 100% / 0.7) 100%
+    );
+    backdrop-filter: blur(12px) saturate(1.1);
+    -webkit-backdrop-filter: blur(12px) saturate(1.1);
+    border: 1px solid hsl(215 25% 90%);
+    box-shadow:
+      0 1px 0 0 hsl(0 0% 100% / 0.8) inset,
+      0 1px 3px 0 hsl(222 47% 11% / 0.04),
+      0 12px 40px -20px hsl(222 47% 11% / 0.12);
+  }
+
+  /* Dark editorial surface for premium accents */
+  .surface-ink {
+    background: linear-gradient(
+      135deg,
+      hsl(222 47% 11%) 0%,
+      hsl(217 33% 17%) 100%
+    );
+    color: hsl(40 33% 98%);
+    border: 1px solid hsl(217 33% 20%);
+    box-shadow:
+      0 1px 0 0 hsl(0 0% 100% / 0.08) inset,
+      0 24px 48px -16px hsl(222 47% 11% / 0.35);
+  }
+
+  /* Premium primary action */
+  .surface-primary {
+    background: linear-gradient(
+      135deg,
+      hsl(162 63% 34%) 0%,
+      hsl(172 66% 40%) 100%
+    );
+    color: hsl(151 81% 97%);
+    box-shadow:
+      0 1px 0 0 hsl(0 0% 100% / 0.18) inset,
+      0 12px 32px -12px hsl(162 63% 30% / 0.45);
+  }
+
+  /* Subtle glowing ring for hero visuals */
+  .ring-glow {
+    box-shadow:
+      0 0 0 1px hsl(var(--border)),
+      0 0 0 6px hsl(162 63% 38% / 0.06),
+      0 0 60px -20px hsl(162 63% 38% / 0.35);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Editorial gradient text for hero titles */
+  .text-gradient-ink {
+    background: linear-gradient(
+      180deg,
+      hsl(222 47% 11%) 0%,
+      hsl(222 47% 18%) 60%,
+      hsl(162 63% 30%) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .text-gradient-primary {
+    background: linear-gradient(
+      135deg,
+      hsl(162 63% 34%) 0%,
+      hsl(172 66% 42%) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Staggered reveal helpers */
+  .stagger > * {
+    opacity: 0;
+    animation: slide-up 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .stagger > *:nth-child(1) { animation-delay: 0ms; }
+  .stagger > *:nth-child(2) { animation-delay: 80ms; }
+  .stagger > *:nth-child(3) { animation-delay: 160ms; }
+  .stagger > *:nth-child(4) { animation-delay: 240ms; }
+  .stagger > *:nth-child(5) { animation-delay: 320ms; }
+  .stagger > *:nth-child(6) { animation-delay: 400ms; }
+  .stagger > *:nth-child(7) { animation-delay: 480ms; }
+
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Dot pattern background */
+  .bg-dots {
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      hsl(215 16% 60% / 0.22) 1px,
+      transparent 0
+    );
+    background-size: 16px 16px;
+  }
+
+  /* Thin tick accent used in hero framing */
+  .accent-tick {
+    position: relative;
+  }
+  .accent-tick::before {
+    content: "";
+    position: absolute;
+    left: -1.25rem;
+    top: 0.2em;
+    bottom: 0.2em;
+    width: 3px;
+    border-radius: 3px;
+    background: linear-gradient(
+      180deg,
+      hsl(162 63% 38%) 0%,
+      hsl(172 66% 48%) 100%
+    );
+  }
+
+  /* Subtle scanline for the ink hero.
+     Implemented as an ::after overlay so it stacks ON TOP of the host's
+     background (e.g. .surface-ink) instead of overriding it. Using
+     `background-image` directly would clobber any existing background
+     because utilities layer > components layer in Tailwind's cascade. */
+  .bg-noise {
+    position: relative;
+  }
+  .bg-noise::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent 0,
+      transparent 2px,
+      hsl(0 0% 100% / 0.025) 2px,
+      hsl(0 0% 100% / 0.025) 3px
+    );
+  }
+}
